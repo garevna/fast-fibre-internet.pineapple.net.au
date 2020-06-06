@@ -315,12 +315,6 @@ export default {
       .then((response) => {
         this.ready = !!response
         document.title = response
-        this.$store.commit('UPDATE_PAGES', {
-          pages: response.mainNavButtons,
-          selectors: response.mainNavSectors
-        })
-        this.$store.commit('contact/UPDATE_EMAIL_SUBJECT', response.emailSubject)
-        this.$store.commit('contact/UPDATE_EMAIL_TEXT', response.emailText)
       })
   },
   mounted () {

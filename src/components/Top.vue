@@ -27,7 +27,7 @@
         </v-card>
       </v-col>
       <v-col sm="12" md="6">
-          <v-card flat width="100%" max-width="600" class="transparent">
+          <v-card flat width="100%" max-width="700" class="transparent">
             <v-img :src="top.pictureURL" max-width="750" class="mx-auto"></v-img>
           </v-card>
       </v-col>

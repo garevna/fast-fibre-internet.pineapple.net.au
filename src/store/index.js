@@ -18,18 +18,14 @@ export default new Vuex.Store({
     viewport: 'lg',
     viewportWidth: window.innerWidth,
     viewportHeight: window.innerHeight,
-    pages: ['Benefits', 'Internet Plans', 'FAQs', 'Contact Us'],
-    selectors: ['benefits', 'plans', 'faq', 'contact'],
+    pages: [],
+    selectors: [],
     plan: 'residential'
   },
   modules,
 
   getters: {
-    familyPicture: (state) => {
-      const size = state.viewportWidth < 600 ? 'small' : state.viewportWidth < 1440 ? 'medium' : 'large'
-      const num = location.hash ? location.hash.slice(1) : '1'
-      return `${state.landhost}/img/family-${size}-${num}.png`
-    }
+    //
   },
 
   mutations: {

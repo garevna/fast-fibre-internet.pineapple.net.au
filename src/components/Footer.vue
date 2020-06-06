@@ -80,7 +80,7 @@
     <FooterBottomContent v-if="viewportWidth >= 770" />
     <FooterBottomContentSmall  v-if="viewportWidth < 770" class="footer--bottom-content-small"/>
     <Popup :opened.sync="popupOpened" />
-    <PopupError :opened.sync="popupErrorOpened" />
+    <!-- <PopupError :opened.sync="popupErrorOpened" /> -->
     <PopupEmailDisabled :opened.sync="popupEmailDisabled" />
   </v-container>
 </template>
