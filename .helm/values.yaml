@@ -1,0 +1,17 @@
+domain: fast-fibre-internet.pineapple.net.au
+slug: fast-fibre-internet-pineapple-net-au
+
+ingress:
+  rateLimit: 1200
+
+uploadSize: 1M
+
+image:
+  repository: registry.gitlab.com/dgtek.net/fast-fibre-internet.pineapple.net.au
+  pullPolicy: IfNotPresent
+  name: fast-fibre-internet-pineapple-net-au
+  port: 80
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
