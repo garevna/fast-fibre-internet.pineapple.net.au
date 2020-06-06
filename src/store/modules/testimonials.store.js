@@ -6,22 +6,19 @@ const state = {
 }
 
 const getters = {
-  host: (state, getters, rootState) => rootState.host,
-  db: (state, getters) => `${getters.host}/testimonials/testimonials.json`,
-  photos: (state, getters) => `${getters.host}/img/testimonials`
+  db: (state, getters, rootState) => `${rootState.host}/testimonials`,
+  photos: (state, getters, rootState) => `${rootState.host}/avatars`
 }
 
 const mutations = {
   UPDATE_CONTENT (state, payload) {
-    state.testimonials = payload
+    state.testimonials = Object.assign({}, payload)
   }
 }
 
 const actions = {
   async GET_CONTENT ({ getters, commit }) {
-    let content = await (await fetch(getters.db)).json()
-    content = content.map((item) => Object.assign({}, item, { photo: `${getters.photos}/${item.photo}` }))
-    commit('UPDATE_CONTENT', content)
+    commit('UPDATE_CONTENT', await (await fetch(getters.db)).json())
   }
 }
 

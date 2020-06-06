@@ -19,7 +19,7 @@
                 rounded
                 height="48"
                 class="submit-button px-auto mx-auto"
-                @click="$emit('update:page', 'contact')"
+                @click="$emit('update:page', top.goto)"
             >
                 {{ top.button }}
             </v-btn>
@@ -28,7 +28,7 @@
       </v-col>
       <v-col sm="12" md="6">
           <v-card flat width="100%" max-width="600" class="transparent">
-            <v-img :src="familyPicture" max-width="750" class="mx-auto"></v-img>
+            <v-img :src="top.pictureURL" max-width="750" class="mx-auto"></v-img>
           </v-card>
       </v-col>
     </v-row>

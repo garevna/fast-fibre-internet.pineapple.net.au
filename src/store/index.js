@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    host: 'https://garevna.github.io/pineapple.net',
+    host: 'https://api.pineapple.net.au',
     landhost: `${location.origin}${location.pathname}`,
     officeAddress: '75 Brighton Road, Elwood VIC 3184',
     officePhone: '1300 857 501',
@@ -33,6 +33,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    UPDATE_PAGES: (state, payload) => {
+      state.pages = Object.assign([], payload.pages)
+      state.selectors = Object.assign([], payload.selectors)
+    },
     CHANGE_VIEWPORT: (state) => {
       state.viewport = window.innerWidth >= 1904 ? 'xl'
         : window.innerWidth >= 1264 ? 'lg'

@@ -103,7 +103,7 @@ export default {
   watch: {
     contact (val) {
       if (!val) return
-      this.$emit('update:page', 'contact')
+      this.$emit('update:page', '#contact')
       this.contact = false
     }
   }

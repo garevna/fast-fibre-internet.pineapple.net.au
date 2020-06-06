@@ -1,6 +1,6 @@
 <template>
   <v-app class="homefone">
-    <v-container fluid class="homefone">
+    <v-container fluid class="homefone" v-if="ready">
       <AppHeader :page.sync="page"/>
       <v-sheet
         width="100%"
@@ -9,7 +9,12 @@
         tile
         class="mx-auto"
       >
-        <Top :page.sync="page" />
+        <section id="top" style="width: 100%">
+          <div class="base-title">
+            <a href="#top" class="core-goto"></a>
+            <Top :page.sync="page" />
+          </div>
+        </section>
       </v-sheet>
 
       <!-- ============================= USER CONTACT ============================= -->
@@ -23,9 +28,9 @@
       >
         <v-row align="center" class="mx-0 px-0">
           <v-col cols="12" md="6" class="aside-col">
-            <section id="benefits" style="width: 100%">
+            <section id="benefit" style="width: 100%">
               <div class="base-title">
-                <a href="#benefits" class="core-goto"></a>
+                <a href="#benefit" class="core-goto"></a>
                 <Aside />
               </div>
             </section>
@@ -36,7 +41,6 @@
                 <div class="base-title">
                   <a href="#contact" class="core-goto"></a>
                   <v-card flat class="transparent mx-0">
-                    <!-- <v-img src="@/img/map-picture.svg" height="800" contain style="opacity:0.2;"></v-img> -->
                       <v-card
                             flat
                             class="user-contact transparent mx-auto pa-0"
@@ -53,8 +57,13 @@
       </v-sheet>
 
       <!-- ============================= HOW TO CONNECT ============================= -->
-      <v-row width="100%">
-        <HowToConnect :page.sync="page" />
+      <v-row width="100%" justify="center">
+        <section id="how-to-connect" class="mx-auto">
+          <div class="base-title">
+            <a href="#how-to-connect" class="core-goto"></a>
+            <HowToConnect :page.sync="page" />
+          </div>
+        </section>
       </v-row>
       <!-- ============================= INTERNET PLANS ============================= -->
       <v-row width="100%" justify="center">
@@ -66,11 +75,16 @@
         </section>
       </v-row>
       <!-- ============================= TESTIMONIALS ============================= -->
-      <v-row width="100%">
-        <Testimonials :page.sync="page"/>
+      <v-row width="100%" justify="center">
+        <section id="testimonials">
+          <div class="base-title">
+            <a href="#testimonials" class="core-goto"></a>
+            <Testimonials :page.sync="page"/>
+          </div>
+        </section>
       </v-row>
       <!-- ============================= FAQ ============================= -->
-      <v-row width="100%">
+      <v-row width="100%" justify="center">
         <section id="faq" style="width: 100%">
           <div class="base-title">
             <a href="#faq" class="core-goto"></a>
@@ -172,7 +186,11 @@ svg.defs-only {
   font-size: 16px!important;
   line-height: 100%;
   text-transform: uppercase;
-  width: 340px;
+  min-width: 240px!important;
+  max-width: 420px!important;
+  height: 48px!important;
+  color: #72BF44;
+  border-radius: 48px!important;
 }
 
 @media (max-width: 600px), (max-height: 600px) {
@@ -229,7 +247,7 @@ svg.defs-only {
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import AppHeader from '@/components/AppHeader.vue'
 import Top from '@/components/Top.vue'
@@ -262,18 +280,25 @@ export default {
         email: '',
         phone: ''
       },
-      plans: false
+      plans: false,
+      ready: false
     }
   },
   computed: {
-    ...mapState(['viewport', 'viewportWidth', 'pages', 'selectors'])
+    ...mapState(['viewport', 'viewportWidth', 'pages', 'selectors']),
+    ...mapActions('content', {
+      getPageContent: 'GET_CONTENT'
+    }),
+    ...mapActions('testimonials', {
+      getTestimonials: 'GET_CONTENT'
+    })
   },
   watch: {
     page (val) {
       if (!val) return
-      this.$vuetify.goTo(`#${val}`, {
+      this.$vuetify.goTo(val, {
         duration: 500,
-        offset: 200,
+        offset: 20,
         easing: 'easeInOutCubic'
       })
       this.page = undefined
@@ -283,6 +308,20 @@ export default {
     onResize () {
       this.$store.commit('CHANGE_VIEWPORT')
     }
+  },
+  beforeMount () {
+    this.getTestimonials.then(() => {})
+    this.getPageContent
+      .then((response) => {
+        this.ready = !!response
+        document.title = response
+        this.$store.commit('UPDATE_PAGES', {
+          pages: response.mainNavButtons,
+          selectors: response.mainNavSectors
+        })
+        this.$store.commit('contact/UPDATE_EMAIL_SUBJECT', response.emailSubject)
+        this.$store.commit('contact/UPDATE_EMAIL_TEXT', response.emailText)
+      })
   },
   mounted () {
     this.onResize()

@@ -152,7 +152,7 @@ import FooterFone from '@/components/footer/FooterFone.vue'
 import FooterBottomContent from '@/components/footer/BottomContent.vue'
 import FooterBottomContentSmall from '@/components/footer/BottomContentSmall.vue'
 
-import Popup from '@/components/Popup.vue'
+import Popup from '@/components/contact/Popup.vue'
 
 const emailValidator = require('email-validator')
 
@@ -200,7 +200,7 @@ export default {
     },
     submit () {
       if (!this.name || !this.phone || !emailValidator.validate(this.email)) {
-        this.$emit('update:page', 'contact')
+        this.$emit('update:page', '#contact')
         return
       }
       this.popupOpened = true

@@ -4,17 +4,17 @@
     <v-row d-flex align="center" justify="end" class="mr-10">
       <v-spacer class="d-none d-lg-flex d-xl-flex"></v-spacer>
       <span width="12" height="12" class="mr-2">
-        <v-img src="@/assets/home/icons/system-bar-call-answer.png" contain></v-img>
+        <v-img src="@/assets/icons/phone.svg" contain></v-img>
       </span>
       <span class="system-bar-phone ml-2 mr-12">1300 857 501</span>
       <span width="10" height="10" class="mr-4">
         <a href="https://www.linkedin.com/company/pineapplenet/" target="_blank">
-          <v-img src="@/assets/home/icons/system-bar-linkedin.png"></v-img>
+          <v-img src="@/assets/icons/linkedin.svg"></v-img>
         </a>
       </span>
       <span width="10" height="10">
         <a href="https://www.facebook.com/PineappleNetAU/" target="_blank">
-          <v-img src="@/assets/home/icons/system-bar-facebook.png"></v-img>
+          <v-img src="@/assets/icons/facebook.svg"></v-img>
         </a>
       </span>
     </v-row>

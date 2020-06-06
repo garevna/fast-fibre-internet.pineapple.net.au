@@ -1,39 +1,62 @@
 <template>
-  <v-card class="user-info mx-auto pa-6 homefone" width="480">
+  <v-card class="user-info mx-auto pa-6 homefone" max-width="480">
     <v-card-title>
       <h4>{{ userForm.title }}</h4>
     </v-card-title>
     <v-card-text class="mx-0 px-0" width="100%">
-      <v-text-field
-            v-for="(item, prop) in items"
-            :key="prop"
-            :placeholder="item.placeholder"
-            outlined
-            dense
-            hide-details
-            height="32"
-            :color="item.color"
-            v-model="item.value"
-            class="user-inputs"
-            :error="item.error"
-            :append-icon="item.validationIcon"
-            @input="validate(item)"
-      ></v-text-field>
-      <v-textarea
-            :placeholder="userForm.messagePlaceholder"
-            outlined
-            color="#656565"
-            auto-grow
-            v-model="message"
-            class="user-inputs"
-      ></v-textarea>
+      <div v-for="(field, fieldName) in fields" :key="fieldName">
+        <InputWithValidation
+              :label="field.placeholder"
+              :fieldName="fieldName"
+              :validator="field.validator"
+              v-if="field.show && field.type === 'input-with-validation'"
+        />
+        <List
+              label="State*"
+              :values="field.available"
+              fieldName="state"
+              v-if="field.show && fieldName === 'state'"
+        />
+        <InputPhoneNumber v-if="field.show && fieldName === 'phone'" />
+        <List
+              :label="field.placeholder"
+              :values="field.available"
+              :fieldName="fieldName"
+              v-if="field.show && fieldName === 'list'"
+        />
+
+        <NumberInput
+              :label="field.placeholder"
+              v-if="field.show && fieldName === 'number'"
+        />
+
+        <Combo
+              :label="field.placeholder"
+              :values="field.available"
+              v-if="field.show && fieldName === 'combo'"
+        />
+
+        <InputMessage
+              :label="field.placeholder"
+              v-if="field.show && fieldName === 'message'"
+        />
+      </div>
     </v-card-text>
+
+    <v-card-text class="ma-auto" width="50%" height="10">
+      <v-progress-linear
+          color="#f50"
+          buffer-value="0"
+          stream
+          v-if="progress"
+      ></v-progress-linear>
+    </v-card-text>
+
     <v-card-actions class="text-center">
       <v-btn
           color="buttons"
           dark
-          rounded
-          width="220"
+          min-width="180"
           height="48"
           class="submit-button px-auto mx-auto"
           @click="sendUserRequest"
@@ -41,15 +64,14 @@
         {{ userForm.button }}
       </v-btn>
     </v-card-actions>
+
     <Popup :opened.sync="popupOpened" />
+    <PopupEmailDisabled :opened.sync="popupEmailDisabled" />
+    <PopupError :opened.sync="popupErrorOpened" />
   </v-card>
 </template>
 
 <style scoped>
-
-.v-text-field.v-text-field--enclosed {
-  margin-bottom: 4px!important;
-}
 
 .user-info {
   width: 640px;
@@ -62,34 +84,21 @@ h4 {
   margin-top: 0;
   margin-bottom: 8px;
 }
-.user-inputs {
-  font-family: Gilroy;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  color: #656565;
-}
 
 @media screen and (max-width: 600px) {
   .v-btn__content {
     font-size: 16px!important;
   }
   .user-info {
-    width: 480px!important;
-    padding-left: 40px;
-  }
-  .user-inputs {
-    font-size: 14px;
+    width: 100%!important;
+    /* padding-left: 40px; */
   }
 }
 @media screen and (max-width: 320px) {
   .user-info {
     width: 300px!important;
     padding-left: 0px;
-  }
-  .user-inputs {
-    font-size: 13px;
+    padding-right: 0px;
   }
 }
 </style>
@@ -98,126 +107,82 @@ h4 {
 
 import { mapState, mapActions } from 'vuex'
 
-import Popup from '@/components/Popup.vue'
+import InputWithValidation from '@/components/contact/InputWithValidation.vue'
+import InputPhoneNumber from '@/components/contact/InputPhoneNumber.vue'
+import List from '@/components/contact/List.vue'
+import NumberInput from '@/components/contact/Number.vue'
+import Combo from '@/components/contact/Combo.vue'
+import InputMessage from '@/components/contact/InputMessage.vue'
 
-const emailValidator = require('email-validator')
+import Popup from '@/components/contact/Popup.vue'
+import PopupEmailDisabled from '@/components/contact/PopupEmailDisabled.vue'
+import PopupError from '@/components/contact/PopupError.vue'
 
 export default {
   name: 'UserContact',
   components: {
-    Popup
+    InputPhoneNumber,
+    InputWithValidation,
+    List,
+    NumberInput,
+    Combo,
+    InputMessage,
+    Popup,
+    PopupEmailDisabled,
+    PopupError
   },
   data () {
     return {
-      message: '',
-      normalColor: '#656565',
-      errorColor: '#FF0E00',
       popupOpened: false,
-      items: {
-        name: {
-          value: '',
-          placeholder: 'Full name*',
-          error: false,
-          color: '',
-          validationIcon: '',
-          validator () { this.error = this.value.length < 2 }
-        },
-        email: {
-          value: '',
-          placeholder: 'Email*',
-          error: false,
-          color: '',
-          validationIcon: '',
-          validator () {
-            this.error = !emailValidator.validate(this.value)
-            this.validationIcon = this.error ? '$invalid' : '$valid'
-            this.color = this.error ? '#FF0E00' : '#656565'
-          }
-        },
-        //   address: {
-        //     value: '',
-        //     placeholder: 'Address*',
-        //     error: false,
-        //     color: '',
-        //     validationIcon: '',
-        //     validator () { this.error = this.value.length < 5 }
-        //   },
-        //   postcode: {
-        //     value: '',
-        //     placeholder: 'Postcode*',
-        //     error: false,
-        //     color: '',
-        //     validationIcon: '',
-        //     validator () {
-        //       this.error = !Number(this.value) || Number(this.value) < 3000 || Number(this.value) > 9999
-        //     }
-        //   },
-        //   state: {
-        //     value: '',
-        //     placeholder: 'State*',
-        //     error: false,
-        //     color: '',
-        //     validationIcon: '',
-        //     validator () { this.error = this.value.length < 5 }
-        //   },
-        phone: {
-          value: '',
-          placeholder: 'Phone',
-          error: false,
-          color: ''
-        }
-      }
+      popupEmailDisabled: false,
+      popupErrorOpened: false,
+      fields: null,
+      progress: false
     }
   },
   computed: {
-    ...mapState('content', ['userForm', 'subject', 'textForUserMail'])
+    ...mapState('content', ['userForm']),
+    ...mapState('contact', ['contactFormFields'])
+  },
+  watch: {
+    contactFormFields: {
+      deep: true,
+      handler (val) {
+        this.fields = JSON.parse(JSON.stringify(val))
+      }
+    }
   },
   methods: {
-    ...mapActions('contact', { sendEmail: 'SEND_EMAIL' }),
+    ...mapActions('contact', {
+      sendEmail: 'SEND_EMAIL'
+    }),
     initFields () {
-      for (const item in this.items) {
-        this.items[item].validationIcon = ''
-        this.items[item].error = false
-        this.items[item].color = this.normalColor
-        this.items[item].value = ''
-      }
-      this.message = ''
-    },
-    validate (item) {
-      if (!item.validator) return
-      item.validator()
-      item.validationIcon = item.error ? '$invalid' : '$valid'
-      item.color = item.error ? this.errorColor : this.normalColor
-    },
-
-    findErrors () {
-      let counter = 0
-      for (const item in this.items) {
-        this.validate(this.items[item])
-        counter += this.items[item].error
-      }
-      return counter > 0
+      this.$store.commit('contact/CLEAR_ALL_FIELDS')
     },
 
     async sendUserRequest () {
-      if (this.findErrors()) return
-      this.popupOpened = true
-      this.sendEmail({
-        subject: this.subject,
-        email: this.items.email.value,
-        message: `${this.textForUserMail}
-        <h3>Name: ${this.items.name.value}</h3>
-        <h4>Email: ${this.items.email.value}</h4>
-        <h4>Phone: ${this.items.phone.value}</h4>
-        <h4>Message:</h4>
-        <p>${this.message.split('\n').join('<br>')}</p>`
-      })
-
-      this.initFields()
+      if (location.host === 'garevna.github.io' || location.port) {
+        this.popupEmailDisabled = true
+        return
+      }
+      this.progress = true
+      if (await this.sendEmail()) this.popupOpened = true
+      else this.popupErrorOpened = true
+      this.progress = false
     }
   },
   mounted () {
-    this.initFields()
+    const fields = this.userForm.fieldsToShow
+    this.selected = []
+    for (const field in fields) {
+      for (const prop in fields[field]) {
+        this.$store.commit('contact/UPDATE_FIELD', {
+          field,
+          prop,
+          value: fields[field][prop]
+        })
+      }
+    }
   }
 }
 

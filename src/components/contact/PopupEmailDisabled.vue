@@ -3,10 +3,11 @@
       <v-dialog v-model="opened" persistent max-width="290">
         <v-card class="pa-6">
           <v-card-title>
-            <h2 text-color="primary">Thanks!</h2>
+            <h2 text-color="primary">Sorry...</h2>
           </v-card-title>
           <v-card-text>
-            <p>We'll get back to you shortly</p>
+            <p>You use the demo version of this app</p>
+            <p>And that's the reason you can't send your message to Pineapple</p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
