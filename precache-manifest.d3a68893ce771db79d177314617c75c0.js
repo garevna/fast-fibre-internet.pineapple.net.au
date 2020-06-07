@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fast-fibre-internet.pineapple.net.au/browserconfig.xml"
   },
   {
-    "revision": "2e489b10cdd671efd62f",
-    "url": "/fast-fibre-internet.pineapple.net.au/css/app.b17d8af7.css"
+    "revision": "1749d658ddc744488d20",
+    "url": "/fast-fibre-internet.pineapple.net.au/css/app.3bba0c43.css"
   },
   {
     "revision": "aaf41324b5b00f02c16c",
@@ -452,12 +452,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fast-fibre-internet.pineapple.net.au/img/testimonials/default.png"
   },
   {
-    "revision": "2822e4b5ced3226112e21ac7faf110a5",
+    "revision": "79424415033c2df96a432c90cf3a268e",
     "url": "/fast-fibre-internet.pineapple.net.au/index.html"
   },
   {
-    "revision": "2e489b10cdd671efd62f",
-    "url": "/fast-fibre-internet.pineapple.net.au/js/app.0f019ddc.js"
+    "revision": "1749d658ddc744488d20",
+    "url": "/fast-fibre-internet.pineapple.net.au/js/app.83d1030a.js"
   },
   {
     "revision": "aaf41324b5b00f02c16c",

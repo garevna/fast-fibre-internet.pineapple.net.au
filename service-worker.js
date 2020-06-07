@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/fast-fibre-internet.pineapple.net.au/precache-manifest.3c18dcaebcca7449ae162c52950bff04.js"
+  "/fast-fibre-internet.pineapple.net.au/precache-manifest.d3a68893ce771db79d177314617c75c0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "fast-fibre-internet.pineapple.net.au"});
