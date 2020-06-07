@@ -25,11 +25,6 @@ const actions = {
     for (const field of ['mainNavButtons', 'mainNavSectors', 'browserTabTitle', 'emailSubject', 'emailText']) {
       delete content[field]
     }
-    // delete content.mainNavButtons
-    // delete content.mainNavSectors
-    // delete content.browserTabTitle
-    // delete content.emailSubject
-    // delete content.emailText
     commit('UPDATE_ALL', content)
     return browserTabTitle
   }
