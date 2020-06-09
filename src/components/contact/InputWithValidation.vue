@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-      :placeholder="label"
+      :placeholder="field.placeholder"
       outlined
       hide-details
       height="32"
@@ -43,7 +43,7 @@
 
 export default {
   name: 'InputWithValidation',
-  props: ['label', 'fieldName', 'validator'],
+  props: ['fieldIndex'],
   data () {
     return {
       normalColor: '#656565',
@@ -55,13 +55,16 @@ export default {
     }
   },
   computed: {
+    field () {
+      return this.$store.state.contact.contactFormFields[this.fieldIndex]
+    },
     result: {
       get () {
-        return this.$store.state.contact.contactFormFields[this.fieldName].value
+        return this.$store.state.contact.contactFormFields[this.fieldIndex].value
       },
       set (val) {
         this.$store.commit('contact/UPDATE_USER_INFO', {
-          prop: this.fieldName,
+          num: this.fieldIndex,
           value: val
         })
       }
@@ -69,9 +72,9 @@ export default {
   },
   methods: {
     validate (val) {
-      this.error = !this.validator(val)
+      this.error = !this.field.validator(val)
       this.$store.commit('contact/SET_ERROR', {
-        prop: this.fieldName,
+        num: this.fieldIndex,
         value: this.error
       })
       this.color = val.length === 0 ? this.normalColor : this.error ? this.errorColor : this.validColor
@@ -79,10 +82,7 @@ export default {
     }
   },
   mounted () {
-    this.available = this.$store.state.contact.contactFormFields[this.fieldName].available
-    if (this.available) {
-      this.validator = val => this.avalable.indexOf(val) !== -1
-    }
+    //
   }
 }
 </script>

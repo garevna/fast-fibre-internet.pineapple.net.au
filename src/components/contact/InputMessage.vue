@@ -17,7 +17,7 @@
 
 export default {
   name: 'InputMessage',
-  props: ['label'],
+  props: ['label', 'fieldIndex'],
   data () {
     return {
       //
@@ -26,11 +26,11 @@ export default {
   computed: {
     message: {
       get () {
-        return this.$store.state.contact.contactFormFields.message.value
+        return this.$store.state.contact.contactFormFields[this.fieldIndex].value
       },
       set (val) {
         this.$store.commit('contact/UPDATE_USER_INFO', {
-          prop: 'message',
+          num: this.fieldIndex,
           value: val
         })
       }

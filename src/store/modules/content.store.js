@@ -16,7 +16,7 @@ const mutations = {
 }
 
 const actions = {
-  async GET_CONTENT ({ getters, commit }) {
+  async GET_CONTENT ({ getters, commit, dispatch }) {
     const content = await (await fetch(getters.contentEndpoint)).json()
     commit('UPDATE_PAGES', { pages: content.mainNavButtons, selectors: content.mainNavSectors }, { root: true })
     commit('contact/UPDATE_EMAIL_SUBJECT', content.emailSubject, { root: true })
@@ -26,6 +26,7 @@ const actions = {
       delete content[field]
     }
     commit('UPDATE_ALL', content)
+    await dispatch('contact/SET_FIELDS_TO_SHOW', content.userForm.fieldsToShow, { root: true })
     return browserTabTitle
   }
 }

@@ -4,41 +4,38 @@
       <h4>{{ userForm.title }}</h4>
     </v-card-title>
     <v-card-text class="mx-0 px-0" width="100%">
-      <div v-for="(field, fieldName) in fields" :key="fieldName">
+      <div v-for="(field, index) in fields" :key="index">
         <InputWithValidation
               :label="field.placeholder"
-              :fieldName="fieldName"
+              :fieldIndex="index"
               :validator="field.validator"
-              v-if="field.show && field.type === 'input-with-validation'"
+              v-if="field.type === 'input-with-validation'"
         />
         <List
-              label="State*"
+              label="field.placeholder"
               :values="field.available"
-              fieldName="state"
-              v-if="field.show && fieldName === 'state'"
+              :fieldIndex="index"
+              v-if="field.type === 'selector'"
         />
-        <InputPhoneNumber v-if="field.show && fieldName === 'phone'" />
-        <List
-              :label="field.placeholder"
-              :values="field.available"
-              :fieldName="fieldName"
-              v-if="field.show && fieldName === 'list'"
+        <InputPhoneNumber
+              v-if="field.type === 'phone-number'"
+              :fieldIndex="index"
         />
-
         <NumberInput
               :label="field.placeholder"
-              v-if="field.show && fieldName === 'number'"
+              :fieldIndex="index"
+              v-if="field.type === 'number'"
         />
-
         <Combo
               :label="field.placeholder"
               :values="field.available"
-              v-if="field.show && fieldName === 'combo'"
+              :fieldIndex="index"
+              v-if="field.type === 'combobox'"
         />
-
         <InputMessage
               :label="field.placeholder"
-              v-if="field.show && fieldName === 'message'"
+              :fieldIndex="index"
+              v-if="field.type === 'textarea'"
         />
       </div>
     </v-card-text>
@@ -152,6 +149,7 @@ export default {
       }
     }
   },
+
   methods: {
     ...mapActions('contact', {
       sendEmail: 'SEND_EMAIL'
@@ -172,17 +170,7 @@ export default {
     }
   },
   mounted () {
-    const fields = this.userForm.fieldsToShow
-    this.selected = []
-    for (const field in fields) {
-      for (const prop in fields[field]) {
-        this.$store.commit('contact/UPDATE_FIELD', {
-          field,
-          prop,
-          value: fields[field][prop]
-        })
-      }
-    }
+    this.fields = this.contactFormFields
   }
 }
 

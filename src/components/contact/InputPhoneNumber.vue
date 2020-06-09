@@ -59,14 +59,15 @@
 
 export default {
   name: 'InputPhoneNumber',
+  props: ['fieldIndex'],
   computed: {
     phoneNumber: {
       get () {
-        return this.$store.state.contact.contactFormFields.phone.value
+        return this.$store.state.contact.contactFormFields[this.fieldIndex].value
       },
       set (val) {
         this.$store.commit('contact/UPDATE_USER_INFO', {
-          prop: 'phone',
+          num: this.fieldIndex,
           value: val
         })
       }
@@ -75,7 +76,7 @@ export default {
   methods: {
     test (res) {
       this.$store.commit('contact/SET_ERROR', {
-        prop: 'phone',
+        num: this.fieldIndex,
         value: !res.isValid
       })
     }

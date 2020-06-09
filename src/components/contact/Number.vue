@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-      :placeholder="label"
+      :placeholder="field.placeholder"
       outlined
       hide-details
       height="32"
@@ -43,7 +43,7 @@
 
 export default {
   name: 'NumberInput',
-  props: ['label'],
+  props: ['fieldIndex'],
   data () {
     return {
       normalColor: '#656565',
@@ -55,13 +55,16 @@ export default {
     }
   },
   computed: {
+    field () {
+      return this.$store.state.contact.contactFormFields[this.fieldIndex]
+    },
     result: {
       get () {
-        return this.$store.state.contact.contactFormFields.number.value
+        return this.field.value
       },
       set (val) {
         this.$store.commit('contact/UPDATE_USER_INFO', {
-          prop: 'number',
+          num: this.fieldIndex,
           value: val
         })
       }
@@ -71,7 +74,7 @@ export default {
     validate (val) {
       this.error = !val.match(/^[0-9]*$/)
       this.$store.commit('contact/SET_ERROR', {
-        prop: 'number',
+        num: this.fieldIndex,
         value: this.error
       })
       this.color = val.length === 0 ? this.normalColor : this.error ? this.errorColor : this.validColor

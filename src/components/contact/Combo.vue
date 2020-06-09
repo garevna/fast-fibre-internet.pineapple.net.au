@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-      :placeholder="label"
+      :placeholder="field.placeholder"
       outlined
       hide-details
       height="32"
@@ -43,7 +43,7 @@
 
 export default {
   name: 'Combo',
-  props: ['label', 'values'],
+  props: ['fieldIndex'],
   data () {
     return {
       normalColor: '#656565',
@@ -56,12 +56,15 @@ export default {
   },
   computed: {
     result: {
+      field () {
+        return this.$store.state.contact.contactFormFields[this.fieldIndex]
+      },
       get () {
-        return this.$store.state.contact.contactFormFields.combo.value
+        return this.field.value
       },
       set (val) {
         this.$store.commit('contact/UPDATE_USER_INFO', {
-          prop: 'combo',
+          num: this.fieldIndex,
           value: val
         })
       }
@@ -69,9 +72,9 @@ export default {
   },
   methods: {
     validate (val) {
-      this.error = this.values.indexOf(val) === -1
+      this.error = this.field.available.indexOf(val) === -1
       this.$store.commit('contact/SET_ERROR', {
-        prop: 'combo',
+        num: this.fieldIndex,
         value: this.error
       })
       this.color = val.length === 0 ? this.normalColor : this.error ? this.errorColor : this.validColor
