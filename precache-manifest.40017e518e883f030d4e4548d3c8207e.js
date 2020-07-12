@@ -20,12 +20,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fast-fibre-internet.pineapple.net.au/browserconfig.xml"
   },
   {
-    "revision": "14c3e9acd170b5d9b906",
-    "url": "/fast-fibre-internet.pineapple.net.au/css/app.62e6ed22.css"
+    "revision": "bcabf99e5175dd003f72",
+    "url": "/fast-fibre-internet.pineapple.net.au/css/app.a5af52f2.css"
   },
   {
-    "revision": "aaf41324b5b00f02c16c",
-    "url": "/fast-fibre-internet.pineapple.net.au/css/chunk-vendors.3797a130.css"
+    "revision": "8b0fe90887f63894db6c",
+    "url": "/fast-fibre-internet.pineapple.net.au/css/chunk-vendors.78027474.css"
   },
   {
     "revision": "3ee088ebf456531c3c79586af139b62f",
@@ -344,10 +344,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fast-fibre-internet.pineapple.net.au/img/dgtek-logo.png"
   },
   {
-    "revision": "248a2857c0f2b23ea0ca962dcb4c8853",
-    "url": "/fast-fibre-internet.pineapple.net.au/img/facebook.248a2857.svg"
-  },
-  {
     "revision": "7dee52eeecce472e49a420943b45df09",
     "url": "/fast-fibre-internet.pineapple.net.au/img/family-large-1.png"
   },
@@ -372,20 +368,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fast-fibre-internet.pineapple.net.au/img/family-small-2.png"
   },
   {
-    "revision": "9c96e0ed7093c095fd33870329282962",
-    "url": "/fast-fibre-internet.pineapple.net.au/img/flags.9c96e0ed.9c96e0ed.png"
-  },
-  {
-    "revision": "798ae4e8aa1c261663f7bce3e05e116c",
-    "url": "/fast-fibre-internet.pineapple.net.au/img/linkedin.798ae4e8.svg"
-  },
-  {
     "revision": "c70254e55d28af26c5f200932d060050",
     "url": "/fast-fibre-internet.pineapple.net.au/img/logo.c70254e5.svg"
-  },
-  {
-    "revision": "f6fb9de088e8b1542ab9fc9b9d80373d",
-    "url": "/fast-fibre-internet.pineapple.net.au/img/phone.f6fb9de0.svg"
   },
   {
     "revision": "64427e15ac5261f4a52128d53350bc94",
@@ -452,16 +436,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fast-fibre-internet.pineapple.net.au/img/testimonials/default.png"
   },
   {
-    "revision": "074517e9949087e385be2be04db83c35",
+    "revision": "1a64ae11130ed0b04b877510221c0217",
     "url": "/fast-fibre-internet.pineapple.net.au/index.html"
   },
   {
-    "revision": "14c3e9acd170b5d9b906",
-    "url": "/fast-fibre-internet.pineapple.net.au/js/app.bac1ae68.js"
+    "revision": "bcabf99e5175dd003f72",
+    "url": "/fast-fibre-internet.pineapple.net.au/js/app.a3dfbb26.js"
   },
   {
-    "revision": "aaf41324b5b00f02c16c",
-    "url": "/fast-fibre-internet.pineapple.net.au/js/chunk-vendors.67739215.js"
+    "revision": "8b0fe90887f63894db6c",
+    "url": "/fast-fibre-internet.pineapple.net.au/js/chunk-vendors.0c458916.js"
   },
   {
     "revision": "3cc6c88301670a39ef72aa3b3b1b75b9",
