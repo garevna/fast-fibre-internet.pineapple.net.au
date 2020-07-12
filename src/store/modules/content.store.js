@@ -26,7 +26,6 @@ const actions = {
       delete content[field]
     }
     commit('UPDATE_ALL', content)
-    await dispatch('contact/SET_FIELDS_TO_SHOW', content.userForm.fieldsToShow, { root: true })
     return browserTabTitle
   }
 }

@@ -46,7 +46,13 @@
                             class="user-contact transparent mx-auto pa-0"
                             style="margin-bottom: 80px"
                       >
-                        <UserContact />
+                        <UserContact
+                              :userForm.sync="userForm"
+                              :emailSubject="emailSubject"
+                              :emailText="emailText"
+                              :emailEndpoint="mailEndpoint"
+                              v-if="userForm && userForm.fieldsToShow"
+                        />
                       </v-card>
                     </v-card>
                   </div>
@@ -105,172 +111,54 @@
   </v-app>
 </template>
 
-<style lang="scss">
-
-html, body {
-  width: 100%;
-  max-width: 100%;
-  font-family: Gilroy;
-}
-
-.container,
-.container--fluid,
-.container.fill-height {
-  padding: 0!important;
-}
-.container.fill-height > .row {
-  max-width: 100%!important;
-}
-
-h1, h2, h3, h4, h5 {
-  white-space: normal;
-  word-break: normal;
-  font-style: normal;
-  font-weight: 900;
-  line-height: 150%;
-  letter-spacing: 0.02em;
-  color: #000;
-  font-family: Gilroy;
-}
-h1 {
-  font-size: 46px;
-}
-h2 {
-  font-size: 32px;
-  text-align: center;
-  width: 150%;
-}
-h3 {
-  font-size: 28px;
-}
-h4 {
-  font-size: 24px;
-}
-h5 {
-  font-size: 20px;
-}
-h4, h5 {
-  font-weight: 600;
-}
-
-p {
-  font-size: 16px;
-  font-weight: normal;
-  line-height: 180%;
-  letter-spacing: 0.02em;
-}
-
-.row {
-  margin-left: 0!important;
-  margin-right: 0!important;
-}
-
-svg.defs-only {
-  display: block;
-  position: absolute;
-  height: 0;
-  width: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-  overflow: hidden;
-}
-
-.user-contact {
-  width: 640px;
-}
-.submit-button {
-  font-family: Gilroy;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px!important;
-  line-height: 100%;
-  text-transform: uppercase;
-  min-width: 240px!important;
-  max-width: 420px!important;
-  height: 48px!important;
-  color: #72BF44;
-  border-radius: 48px!important;
-}
-
-@media (max-width: 600px), (max-height: 600px) {
-  h1 { font-size: 28px; }
-  h2 { font-size: 24px; }
-  h3 { font-size: 20px; }
-  h4, h5 {
-    font-size: 18px;
-  }
-  p { font-size: 16px; }
-  .user-contact {
-    width: 480px;
-  }
-  .submit-button {
-    font-size: 14px!important;
-  }
-}
-
-@media (max-width: 400px), (max-height: 400px) {
-  h1 { font-size: 26px; }
-  h2 { font-size: 24px; }
-  h3 { font-size: 20px; }
-  h4, h5 {
-    font-size: 16px;
-  }
-  p {
-    font-size: 14px!important;
-    width: 100%!important;
-  }
-  .user-contact {
-    width: 300px;
-  }
-  .submit-button {
-    font-size: 13px!important;
-    width: 100%!important;
-    border-radius: 8px!important;
-  }
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #20731C;
-}
-::-webkit-scrollbar-thumb {
-  background: #4CAF50;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #72BF44;
-}
-
-</style>
-
 <script>
 
 import { mapState, mapActions } from 'vuex'
 
+import 'pineapple-styles'
+
+/* SystemBar */
+import 'pineapple-system-bar'
+import 'pineapple-system-bar/dist/pineapple-system-bar.css'
+
+/* HowToConnect */
+import 'pineapple-how-to-connect'
+import 'pineapple-how-to-connect/dist/pineapple-how-to-connect.css'
+
+/* Testimonials */
+import 'pineapple-testimonials'
+import 'pineapple-testimonials/dist/pineapple-testimonials.css'
+
+/* InternetPlans */
+import 'pineapple-internet-plans'
+import 'pineapple-internet-plans/dist/pineapple-internet-plans.css'
+
+/* Popup */
+import 'pineapple-popup'
+import 'pineapple-popup/dist/pineapple-popup.css'
+
+/* UserContact */
+import 'pineapple-contact-form'
+import 'pineapple-contact-form/dist/pineapple-contact-form.css'
+
+/* FAQ */
+import 'pineapple-faq'
+import 'pineapple-faq/dist/pineapple-faq.css'
+
+/* Footer */
+import 'pineapple-footer'
+import 'pineapple-footer/dist/pineapple-footer.css'
+
 import AppHeader from '@/components/AppHeader.vue'
 import Top from '@/components/Top.vue'
 import Aside from '@/components/Aside.vue'
-import UserContact from '@/components/UserContact.vue'
-import HowToConnect from '@/components/HowToConnect.vue'
-import Testimonials from '@/components/Testimonials.vue'
-import InternetPlans from '@/components/InternetPlans.vue'
-import FAQ from '@/components/FAQ.vue'
-import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
     AppHeader,
     Top,
-    Aside,
-    UserContact,
-    HowToConnect,
-    Testimonials,
-    InternetPlans,
-    FAQ,
-    Footer
+    Aside
   },
   data () {
     return {
@@ -286,6 +174,8 @@ export default {
   },
   computed: {
     ...mapState(['viewport', 'viewportWidth', 'pages', 'selectors']),
+    ...mapState('content', ['userForm']),
+    ...mapState('contact', ['mailEndpoint', 'emailSubject', 'emailText']),
     ...mapActions('content', {
       getPageContent: 'GET_CONTENT'
     }),

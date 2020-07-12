@@ -6,12 +6,8 @@ import './registerServiceWorker'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
-import '@/sass/fonts.scss'
-import '@/sass/variables.scss'
-
-import VuePhoneNumberInput from 'vue-phone-number-input'
-import 'vue-phone-number-input/dist/vue-phone-number-input.css'
-Vue.component('vue-phone-number-input', VuePhoneNumberInput)
+import 'pineapple-styles/css/fonts.scss'
+import 'pineapple-styles/css/variables.scss'
 
 Vue.config.productionTip = false
 
